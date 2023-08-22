@@ -11,9 +11,15 @@ export default function TodoList({ $target, initialState, onToggle, onRemove }) 
     }
 
     this.render = () => {
+        const { isLoading, todos } = this.state
+
+        if (!isLoading && todos.length === 0) {
+            $todo.innerHTML = `Todo가 없습니다!`
+            return
+        }
         $todo.innerHTML = `
         <ul>
-            ${this.state.map(({ _id, content, isCompleted }) => `
+            ${todos.map(({ _id, content, isCompleted }) => `
                 <li data-id="${_id}" class="todo-item">
                     ${isCompleted ? `<s>${content}</s>` : content }
                     <button class="remove">x</button>
@@ -40,4 +46,3 @@ export default function TodoList({ $target, initialState, onToggle, onRemove }) 
 
     this.render()
 }
-//<h1>${this.state.username}의 할일 목록</h1>
